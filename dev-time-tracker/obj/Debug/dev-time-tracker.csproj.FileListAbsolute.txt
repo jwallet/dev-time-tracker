@@ -1,0 +1,10 @@
+C:\dev\dev-time-tracker\dev-time-tracker\bin\Debug\dev-time-tracker.exe.config
+C:\dev\dev-time-tracker\dev-time-tracker\bin\Debug\dev-time-tracker.exe
+C:\dev\dev-time-tracker\dev-time-tracker\bin\Debug\dev-time-tracker.pdb
+C:\dev\dev-time-tracker\dev-time-tracker\obj\Debug\dev-time-tracker.csprojAssemblyReference.cache
+C:\dev\dev-time-tracker\dev-time-tracker\obj\Debug\DevTimeTracker.frmSettings.resources
+C:\dev\dev-time-tracker\dev-time-tracker\obj\Debug\DevTimeTracker.Properties.Resources.resources
+C:\dev\dev-time-tracker\dev-time-tracker\obj\Debug\dev-time-tracker.csproj.GenerateResource.cache
+C:\dev\dev-time-tracker\dev-time-tracker\obj\Debug\dev-time-tracker.csproj.CoreCompileInputs.cache
+C:\dev\dev-time-tracker\dev-time-tracker\obj\Debug\dev-time-tracker.exe
+C:\dev\dev-time-tracker\dev-time-tracker\obj\Debug\dev-time-tracker.pdb
