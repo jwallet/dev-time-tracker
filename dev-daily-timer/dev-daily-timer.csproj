@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{37F8FC5E-2BA0-4869-B393-DEEBC660CC8A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>harvest_timer</RootNamespace>
-    <AssemblyName>harvest-timer</AssemblyName>
+    <RootNamespace>dev_daily_timer</RootNamespace>
+    <AssemblyName>dev-daily-timer</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -52,7 +52,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserSettings.cs" />
     <EmbeddedResource Include="frmSettings.resx">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </EmbeddedResource>

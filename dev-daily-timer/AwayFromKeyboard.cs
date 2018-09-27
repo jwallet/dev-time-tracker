@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace harvest_timer
+namespace dev_daily_timer
 {
     internal struct LASTINPUTINFO
     {

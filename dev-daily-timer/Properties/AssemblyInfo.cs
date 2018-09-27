@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("harvest-timer")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Dev Daily Timer")]
+[assembly: AssemblyDescription("github.com/jwallet/dev-daily-timer")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("harvest-timer")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCompany("jwallet")]
+[assembly: AssemblyProduct("Dev Daily Timer")]
+[assembly: AssemblyCopyright("Copyright ©  2018 - jwallet")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

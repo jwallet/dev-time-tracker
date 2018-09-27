@@ -4,12 +4,11 @@ using System.Threading;
 using System.Timers;
 using System.Windows.Forms;
 
-namespace harvest_timer
+namespace dev_daily_timer
 {
-
     static class Program
     {
-        private const string title = "Harvest Timer";
+        private const string title = "Dev Daily Timer";
         private static bool isPauseForced;
         private static System.Timers.Timer timer;
         private static DateTime time;
@@ -21,12 +20,6 @@ namespace harvest_timer
         private static MenuItem mnuResume;
         private static NotifyIcon notificationIcon;
 
-        public static UserSettings settings;
-
-
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
@@ -36,8 +29,6 @@ namespace harvest_timer
             var notifyThread = new Thread(
                 delegate ()
                 {
-                    settings = new UserSettings(Properties.Settings.Default);
-
                     CreateMenu();
                     CreateIcon();
                     CreateTimer();
@@ -60,7 +51,7 @@ namespace harvest_timer
 
             timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
 
-            if (settings.AutoStart)
+            if (Properties.Settings.Default.AutoStart)
             {
                 timer.Start();
             }
@@ -126,10 +117,10 @@ namespace harvest_timer
 
         private static void CheckUserActivity()
         {
-            if (isPauseForced || !settings.AfkEnabled) return;
+            if (isPauseForced || !Properties.Settings.Default.AfkEnabled) return;
 
             var lastActivityLogMilliseconds = AwayFromKeyboard.GetIdleTime();
-            if (lastActivityLogMilliseconds > settings.AfkDelayMilliseconds)
+            if (lastActivityLogMilliseconds > Properties.Settings.Default.AfkDelayMilliseconds)
             {
                 Pause();
             }
@@ -141,9 +132,9 @@ namespace harvest_timer
 
         private static void CheckResetTimerDaily()
         {
-            if (!settings.ResetDailyEnabled) return;
+            if (!Properties.Settings.Default.ResetDailyEnabled) return;
 
-            if (DateTime.Now.Hour >= settings.ResetDailyAtHour)
+            if (DateTime.Now.Hour >= Properties.Settings.Default.ResetDailyAtHour)
             {
                 ResetTime();
             }
@@ -214,7 +205,7 @@ namespace harvest_timer
 
         private static void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
         {
-            if (!settings.LockScreenEnabled) return;
+            if (!Properties.Settings.Default.LockScreenEnabled) return;
 
             if (e.Reason == SessionSwitchReason.SessionLock)
             {

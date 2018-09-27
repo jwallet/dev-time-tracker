@@ -7,3 +7,12 @@ C:\Users\w1z1k\Source\Repos\dev-daily-timer\dev-daily-timer\obj\Release\dev-dail
 C:\Users\w1z1k\Source\Repos\dev-daily-timer\dev-daily-timer\obj\Release\dev-daily-timer.csproj.CoreCompileInputs.cache
 C:\Users\w1z1k\Source\Repos\dev-daily-timer\dev-daily-timer\obj\Release\harvest-timer.exe
 C:\Users\w1z1k\Source\Repos\dev-daily-timer\dev-daily-timer\obj\Release\harvest-timer.pdb
+C:\Users\w1z1k\Documents\GitHub\dev-daily-timer\dev-daily-timer\obj\Release\dev-daily-timer.csproj.GenerateResource.cache
+C:\Users\w1z1k\Documents\GitHub\dev-daily-timer\dev-daily-timer\obj\Release\dev-daily-timer.csproj.CoreCompileInputs.cache
+C:\Users\w1z1k\Documents\GitHub\dev-daily-timer\dev-daily-timer\bin\Release\dev-daily-timer.exe.config
+C:\Users\w1z1k\Documents\GitHub\dev-daily-timer\dev-daily-timer\bin\Release\dev-daily-timer.exe
+C:\Users\w1z1k\Documents\GitHub\dev-daily-timer\dev-daily-timer\bin\Release\dev-daily-timer.pdb
+C:\Users\w1z1k\Documents\GitHub\dev-daily-timer\dev-daily-timer\obj\Release\dev_daily_timer.frmSettings.resources
+C:\Users\w1z1k\Documents\GitHub\dev-daily-timer\dev-daily-timer\obj\Release\dev_daily_timer.Properties.Resources.resources
+C:\Users\w1z1k\Documents\GitHub\dev-daily-timer\dev-daily-timer\obj\Release\dev-daily-timer.exe
+C:\Users\w1z1k\Documents\GitHub\dev-daily-timer\dev-daily-timer\obj\Release\dev-daily-timer.pdb

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace harvest_timer
+namespace dev_daily_timer
 {
     public partial class frmSettings : Form
     {
@@ -32,32 +32,38 @@ namespace harvest_timer
         {
             numResetDailyAt.Enabled = chkResetDaily.Checked;
             Properties.Settings.Default.ResetDailyEnabled = chkResetDaily.Checked;
+            Properties.Settings.Default.Save();
         }
 
         private void chkAutoStart_CheckedChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.AutoStart = chkAutoStart.Checked;
+            Properties.Settings.Default.Save();
         }
 
         private void numResetDailyAt_ValueChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.ResetDailyAtHour = (int)numResetDailyAt.Value;
+            Properties.Settings.Default.Save();
         }
 
         private void chkLockScreen_CheckedChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.LockScreenEnabled = chkLockScreen.Checked;
+            Properties.Settings.Default.Save();
         }
 
         private void chkAfk_CheckedChanged(object sender, EventArgs e)
         {
             numAfkDelay.Enabled = chkAfk.Checked;
             Properties.Settings.Default.AfkEnabled = chkAfk.Checked;
+            Properties.Settings.Default.Save();
         }
 
         private void numAfkDelay_ValueChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.AfkDelayMilliseconds = (int)(numAfkDelay.Value * 60000);
+            Properties.Settings.Default.Save();
         }
     }
 }

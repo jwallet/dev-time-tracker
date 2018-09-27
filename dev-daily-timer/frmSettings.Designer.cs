@@ -1,4 +1,4 @@
-﻿namespace harvest_timer
+﻿namespace dev_daily_timer
 {
     partial class frmSettings
     {
@@ -284,7 +284,7 @@
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Harvest Timer Settings";
+            this.Text = "Dev Daily Timer Settings";
             this.TopMost = true;
             this.tlpContent.ResumeLayout(false);
             this.tlpContent.PerformLayout();
