@@ -1,0 +1,10 @@
+C:\Users\w1z1k\Source\Repos\dev-daily-timer\dev-daily-timer\bin\Debug\harvest-timer.exe.config
+C:\Users\w1z1k\Source\Repos\dev-daily-timer\dev-daily-timer\bin\Debug\harvest-timer.exe
+C:\Users\w1z1k\Source\Repos\dev-daily-timer\dev-daily-timer\bin\Debug\harvest-timer.pdb
+C:\Users\w1z1k\Source\Repos\dev-daily-timer\dev-daily-timer\obj\Debug\dev-daily-timer.csprojAssemblyReference.cache
+C:\Users\w1z1k\Source\Repos\dev-daily-timer\dev-daily-timer\obj\Debug\harvest_timer.frmSettings.resources
+C:\Users\w1z1k\Source\Repos\dev-daily-timer\dev-daily-timer\obj\Debug\harvest_timer.Properties.Resources.resources
+C:\Users\w1z1k\Source\Repos\dev-daily-timer\dev-daily-timer\obj\Debug\dev-daily-timer.csproj.GenerateResource.cache
+C:\Users\w1z1k\Source\Repos\dev-daily-timer\dev-daily-timer\obj\Debug\dev-daily-timer.csproj.CoreCompileInputs.cache
+C:\Users\w1z1k\Source\Repos\dev-daily-timer\dev-daily-timer\obj\Debug\harvest-timer.exe
+C:\Users\w1z1k\Source\Repos\dev-daily-timer\dev-daily-timer\obj\Debug\harvest-timer.pdb
