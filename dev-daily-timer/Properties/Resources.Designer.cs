@@ -63,9 +63,69 @@ namespace dev_daily_timer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
+        internal static System.Drawing.Icon stopwatch_2_128 {
+            get {
+                object obj = ResourceManager.GetObject("stopwatch_2_128", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon stopwatch_2_16 {
+            get {
+                object obj = ResourceManager.GetObject("stopwatch_2_16", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon stopwatch_2_24 {
+            get {
+                object obj = ResourceManager.GetObject("stopwatch_2_24", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
         internal static System.Drawing.Icon stopwatch_2_32 {
             get {
                 object obj = ResourceManager.GetObject("stopwatch_2_32", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon stopwatch_2_48 {
+            get {
+                object obj = ResourceManager.GetObject("stopwatch_2_48", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon stopwatch_2_64 {
+            get {
+                object obj = ResourceManager.GetObject("stopwatch_2_64", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon systray {
+            get {
+                object obj = ResourceManager.GetObject("systray", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }

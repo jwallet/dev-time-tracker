@@ -70,11 +70,11 @@ namespace dev_daily_timer
             mnuPause = new MenuItem("Pause");
             menu.MenuItems.Add(0, mnuPause);
             mnuPause.Click += new EventHandler(mnuPause_Click);
+            mnuPause.Visible = false;
 
             mnuResume = new MenuItem("Resume");
             menu.MenuItems.Add(1, mnuResume);
             mnuResume.Click += new EventHandler(mnuResume_Click);
-            mnuResume.Visible = false;
 
             mnuReset = new MenuItem("Reset");
             menu.MenuItems.Add(2, mnuReset);
@@ -93,7 +93,7 @@ namespace dev_daily_timer
         {
             notificationIcon = new NotifyIcon
             {
-                Icon = Properties.Resources.stopwatch_2_32,
+                Icon = Properties.Resources.systray,
                 ContextMenu = menu,
                 Text = title
             };
@@ -144,16 +144,12 @@ namespace dev_daily_timer
         {
             if (!timer.Enabled) return;
             timer.Stop();
-            mnuResume.Visible = true;
-            mnuPause.Visible = false;
         }
 
         private static void Resume()
         {
             if (timer.Enabled) return;
             timer.Start();
-            mnuResume.Visible = false;
-            mnuPause.Visible = true;
         }
 
         private static void timer_Elapsed(object sender, EventArgs e)
@@ -169,6 +165,15 @@ namespace dev_daily_timer
             {
                 CheckResetTimerDaily();
             }
+
+            MenuVisibility();
+        }
+
+        private static void MenuVisibility()
+        {
+            var isRunning = IsTimeRunning();
+            mnuPause.Visible = isRunning;
+            mnuResume.Visible = !isRunning;
         }
 
         private static void mnuExit_Click(object sender, EventArgs e)
