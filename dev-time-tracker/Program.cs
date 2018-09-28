@@ -19,6 +19,7 @@ namespace DevTimeTracker
         private static MenuItem _mnuPause;
         private static MenuItem _mnuResume;
         private static NotifyIcon _notificationIcon;
+        private static frmSettings _frmSettings;
 
         private static bool IsTimeRunning { get => _timer.Enabled && _time.Ticks > 0; }
 
@@ -27,6 +28,9 @@ namespace DevTimeTracker
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            new Mutex(true, Title, out var createdNew);
+            if (!createdNew) return;
 
             var notifyThread = new Thread(
                 delegate ()
@@ -181,10 +185,14 @@ namespace DevTimeTracker
 
         private static void mnuSettings_Click(object sender, EventArgs e)
         {
-            var frmSettings = new frmSettings();
-            frmSettings.Left = Screen.PrimaryScreen.WorkingArea.Right - frmSettings.Width;
-            frmSettings.Top = Screen.PrimaryScreen.WorkingArea.Bottom - frmSettings.Height;
-            frmSettings.Show();
+            if (_frmSettings == null)
+            {
+                _frmSettings = new frmSettings();
+                _frmSettings.Left = Screen.PrimaryScreen.WorkingArea.Right - _frmSettings.Width;
+                _frmSettings.Top = Screen.PrimaryScreen.WorkingArea.Bottom - _frmSettings.Height;
+                _frmSettings.FormClosed += delegate { _frmSettings = null; };
+            }
+            _frmSettings.Show();
         }
 
         private static void mnuReset_Click(object sender, EventArgs e)

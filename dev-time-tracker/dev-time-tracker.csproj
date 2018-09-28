@@ -95,32 +95,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\stopwatch-2-128.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\stopwatch-2-64.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\stopwatch-2-48.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\stopwatch-2-16.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\stopwatch-2-24.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\stopwatch-2-32.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\time-32.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\systray.ico" />
