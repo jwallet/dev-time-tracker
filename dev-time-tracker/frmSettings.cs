@@ -11,15 +11,29 @@ namespace DevTimeTracker
 {
     public partial class frmSettings : Form
     {
+        private static Dictionary<string, string> _timeFormatOptions;
+
         public frmSettings()
         {
             InitializeComponent();
+
+            _timeFormatOptions = new Dictionary<string, string>
+            {
+                { "H:mm:ss", "13:37:00" },
+                { "H'h'mm'm'ss's'", "13h37m00s" },
+                { "H:mm", "13:37" },
+                { "H'h'mm", "13h37" }
+            };
+
+            cbTimeFormat.Items.AddRange(_timeFormatOptions.Select(x => x.Value).ToArray());
 
             chkAutoStart.Checked = Properties.Settings.Default.AutoStart;
 
             chkResetDaily.Checked = Properties.Settings.Default.ResetDailyEnabled;
             numResetDailyAt.Value = Properties.Settings.Default.ResetDailyAtHour;
             numResetDailyAt.Enabled = chkResetDaily.Checked;
+
+            cbTimeFormat.SelectedItem = _timeFormatOptions.FirstOrDefault(x => x.Key == Properties.Settings.Default.TimeFormat).Value;
 
             chkLockScreen.Checked = Properties.Settings.Default.LockScreenEnabled;
 
@@ -63,6 +77,12 @@ namespace DevTimeTracker
         private void numAfkDelay_ValueChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.AfkDelayMilliseconds = (int)(numAfkDelay.Value * 60000);
+            Properties.Settings.Default.Save();
+        }
+
+        private void cbTimeFormat_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.TimeFormat = _timeFormatOptions.FirstOrDefault(x => x.Value == cbTimeFormat.SelectedItem?.ToString()).Key;
             Properties.Settings.Default.Save();
         }
     }

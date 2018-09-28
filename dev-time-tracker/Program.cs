@@ -20,6 +20,8 @@ namespace DevTimeTracker
         private static MenuItem _mnuResume;
         private static NotifyIcon _notificationIcon;
 
+        private static bool IsTimeRunning { get => _timer.Enabled && _time.Ticks > 0; }
+
         [STAThread]
         private static void Main()
         {
@@ -107,12 +109,7 @@ namespace DevTimeTracker
 
         private static void DisplayTime()
         {
-            _notificationIcon.Text = IsTimeRunning() ? _time.ToString("HH:mm:ss") : Title;
-        }
-
-        private static bool IsTimeRunning()
-        {
-            return _timer.Enabled && _time.Ticks > 0;
+            _notificationIcon.Text = IsTimeRunning ? _time.ToString(Properties.Settings.Default.TimeFormat) : Title;
         }
 
         private static void CheckUserActivity()
@@ -134,7 +131,9 @@ namespace DevTimeTracker
         {
             if (!Properties.Settings.Default.ResetDailyEnabled) return;
 
-            if (DateTime.Now.Hour == Properties.Settings.Default.ResetDailyAtHour)
+            var now = DateTime.Now;
+            var isOClock = now.Minute == 0 && now.Second == 0;
+            if (now.Hour == Properties.Settings.Default.ResetDailyAtHour && isOClock)
             {
                 ResetTime();
             }
@@ -156,15 +155,11 @@ namespace DevTimeTracker
         {
             AddTime();
             DisplayTime();
+            CheckResetTimerDaily();
 
             if (_time.Second == 0)
             {
                 CheckUserActivity();
-
-                if (_time.Minute == 0)
-                {
-                    CheckResetTimerDaily();
-                }
             }
 
             MenuVisibility();
@@ -172,7 +167,7 @@ namespace DevTimeTracker
 
         private static void MenuVisibility()
         {
-            var isRunning = IsTimeRunning();
+            var isRunning = IsTimeRunning;
             _mnuPause.Visible = isRunning;
             _mnuResume.Visible = !isRunning;
         }

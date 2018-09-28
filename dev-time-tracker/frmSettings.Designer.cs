@@ -45,6 +45,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.numResetDailyAt = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.cbTimeFormat = new System.Windows.Forms.ComboBox();
             this.tlpContent.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numAfkDelay)).BeginInit();
@@ -57,20 +59,22 @@
             this.tlpContent.ColumnCount = 2;
             this.tlpContent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlpContent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 214F));
-            this.tlpContent.Controls.Add(this.label1, 0, 3);
-            this.tlpContent.Controls.Add(this.chkAfk, 1, 3);
-            this.tlpContent.Controls.Add(this.flowLayoutPanel1, 1, 4);
-            this.tlpContent.Controls.Add(this.label3, 0, 2);
+            this.tlpContent.Controls.Add(this.label1, 0, 4);
+            this.tlpContent.Controls.Add(this.chkAfk, 1, 4);
+            this.tlpContent.Controls.Add(this.flowLayoutPanel1, 1, 5);
+            this.tlpContent.Controls.Add(this.label3, 0, 3);
             this.tlpContent.Controls.Add(this.label4, 0, 0);
             this.tlpContent.Controls.Add(this.chkAutoStart, 1, 0);
-            this.tlpContent.Controls.Add(this.chkLockScreen, 1, 2);
+            this.tlpContent.Controls.Add(this.chkLockScreen, 1, 3);
             this.tlpContent.Controls.Add(this.label5, 0, 1);
             this.tlpContent.Controls.Add(this.flowLayoutPanel2, 1, 1);
+            this.tlpContent.Controls.Add(this.label9, 0, 2);
+            this.tlpContent.Controls.Add(this.cbTimeFormat, 1, 2);
             this.tlpContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpContent.Location = new System.Drawing.Point(0, 0);
             this.tlpContent.Name = "tlpContent";
             this.tlpContent.Padding = new System.Windows.Forms.Padding(15);
-            this.tlpContent.RowCount = 7;
+            this.tlpContent.RowCount = 8;
             this.tlpContent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tlpContent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tlpContent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
@@ -78,14 +82,15 @@
             this.tlpContent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tlpContent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tlpContent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tlpContent.Size = new System.Drawing.Size(384, 161);
+            this.tlpContent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tlpContent.Size = new System.Drawing.Size(384, 181);
             this.tlpContent.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(18, 90);
+            this.label1.Location = new System.Drawing.Point(18, 115);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(134, 25);
             this.label1.TabIndex = 0;
@@ -95,7 +100,7 @@
             // chkAfk
             // 
             this.chkAfk.AutoSize = true;
-            this.chkAfk.Location = new System.Drawing.Point(158, 96);
+            this.chkAfk.Location = new System.Drawing.Point(158, 121);
             this.chkAfk.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
             this.chkAfk.Name = "chkAfk";
             this.chkAfk.Size = new System.Drawing.Size(131, 16);
@@ -110,7 +115,7 @@
             this.flowLayoutPanel1.Controls.Add(this.numAfkDelay);
             this.flowLayoutPanel1.Controls.Add(this.label8);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(155, 115);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(155, 140);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(214, 25);
@@ -156,7 +161,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Location = new System.Drawing.Point(18, 65);
+            this.label3.Location = new System.Drawing.Point(18, 90);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(134, 25);
             this.label3.TabIndex = 3;
@@ -188,7 +193,7 @@
             // chkLockScreen
             // 
             this.chkLockScreen.AutoSize = true;
-            this.chkLockScreen.Location = new System.Drawing.Point(158, 71);
+            this.chkLockScreen.Location = new System.Drawing.Point(158, 96);
             this.chkLockScreen.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
             this.chkLockScreen.Name = "chkLockScreen";
             this.chkLockScreen.Size = new System.Drawing.Size(191, 16);
@@ -268,23 +273,43 @@
             this.label7.Text = "h";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label9.Location = new System.Drawing.Point(18, 65);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(134, 25);
+            this.label9.TabIndex = 3;
+            this.label9.Text = "Time Format";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // cbTimeFormat
+            // 
+            this.cbTimeFormat.FormattingEnabled = true;
+            this.cbTimeFormat.Location = new System.Drawing.Point(158, 68);
+            this.cbTimeFormat.Name = "cbTimeFormat";
+            this.cbTimeFormat.Size = new System.Drawing.Size(121, 21);
+            this.cbTimeFormat.TabIndex = 5;
+            this.cbTimeFormat.SelectedIndexChanged += new System.EventHandler(this.cbTimeFormat_SelectedIndexChanged);
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 161);
+            this.ClientSize = new System.Drawing.Size(384, 181);
             this.Controls.Add(this.tlpContent);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(400, 200);
+            this.MaximumSize = new System.Drawing.Size(400, 220);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(400, 200);
+            this.MinimumSize = new System.Drawing.Size(400, 220);
             this.Name = "frmSettings";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "Dev Daily Timer Settings";
+            this.Text = "Dev Time Tracker Settings";
             this.TopMost = true;
             this.tlpContent.ResumeLayout(false);
             this.tlpContent.PerformLayout();
@@ -317,6 +342,8 @@
         private System.Windows.Forms.NumericUpDown numResetDailyAt;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ComboBox cbTimeFormat;
     }
 }
 
