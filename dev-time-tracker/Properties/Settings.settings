@@ -9,13 +9,13 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="AfkDelayMilliseconds" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">600000</Value>
+      <Value Profile="(Default)">300000</Value>
     </Setting>
     <Setting Name="ResetDailyEnabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="ResetDailyAtHour" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">6</Value>
+      <Value Profile="(Default)">3</Value>
     </Setting>
     <Setting Name="AutoStart" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
