@@ -1,4 +1,4 @@
-## Developer Time Tracker
+## Dev Time Tracker
 
 ![image](https://user-images.githubusercontent.com/23088305/46271539-0b597100-c51b-11e8-8339-e4afea309665.png)
 
