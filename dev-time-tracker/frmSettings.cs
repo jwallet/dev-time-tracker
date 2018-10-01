@@ -42,6 +42,12 @@ namespace DevTimeTracker
             numAfkDelay.Enabled = chkAfk.Checked;
         }
 
+        internal void SaveLastShift(DateTime time)
+        {
+            Properties.Settings.Default.LastShiftTicks = time.Ticks;
+            Properties.Settings.Default.Save();
+        }
+
         private void chkResetDaily_CheckedChanged(object sender, EventArgs e)
         {
             numResetDailyAt.Enabled = chkResetDaily.Checked;

@@ -78,14 +78,8 @@ namespace DevTimeTracker
             if (!manual)
             {
                 _notification.ShowNotificationBalloon(Notification.GetOnResetContnent());
-                SaveLastShift();
+                _frmSettings.SaveLastShift(_time);
             }
-        }
-
-        private static void SaveLastShift()
-        {
-            Properties.Settings.Default.LastShiftTicks = _time.Ticks;
-            Properties.Settings.Default.Save();
         }
 
         private static void CreateMenu()
@@ -170,6 +164,22 @@ namespace DevTimeTracker
             _notification.NotificationIcon.Icon = GetNotificationIcon;
         }
 
+        private static void BindToLockScreen()
+        {
+            SystemEvents.SessionSwitch += new SessionSwitchEventHandler(SystemEvents_SessionSwitch);
+        }
+
+        private static void ValidFormInstance()
+        {
+            if (_frmSettings == null)
+            {
+                _frmSettings = new frmSettings();
+                _frmSettings.Left = Screen.PrimaryScreen.WorkingArea.Right - _frmSettings.Width;
+                _frmSettings.Top = Screen.PrimaryScreen.WorkingArea.Bottom - _frmSettings.Height;
+                _frmSettings.FormClosed += delegate { _frmSettings = null; };
+            }
+        }
+
         private static void timer_Elapsed(object sender, EventArgs e)
         {
             AddTime();
@@ -184,20 +194,16 @@ namespace DevTimeTracker
 
         private static void mnuExit_Click(object sender, EventArgs e)
         {
+            ValidFormInstance();
+            _frmSettings.SaveLastShift(_time);
+
             _notification.Dispose();
-            SaveLastShift();
             Application.Exit();
         }
 
         private static void mnuSettings_Click(object sender, EventArgs e)
         {
-            if (_frmSettings == null)
-            {
-                _frmSettings = new frmSettings();
-                _frmSettings.Left = Screen.PrimaryScreen.WorkingArea.Right - _frmSettings.Width;
-                _frmSettings.Top = Screen.PrimaryScreen.WorkingArea.Bottom - _frmSettings.Height;
-                _frmSettings.FormClosed += delegate { _frmSettings = null; };
-            }
+            ValidFormInstance();
             _frmSettings.Show();
         }
 
@@ -246,10 +252,6 @@ namespace DevTimeTracker
                     _wasDailyReset = true;
                 }
             }
-        }
-        private static void BindToLockScreen()
-        {
-            SystemEvents.SessionSwitch += new SessionSwitchEventHandler(SystemEvents_SessionSwitch);
         }
     }
 }
