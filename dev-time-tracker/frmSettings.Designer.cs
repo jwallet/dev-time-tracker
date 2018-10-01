@@ -32,7 +32,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.chkAfk = new System.Windows.Forms.CheckBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.label2 = new System.Windows.Forms.Label();
             this.numAfkDelay = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -111,7 +110,6 @@
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Controls.Add(this.label2);
             this.flowLayoutPanel1.Controls.Add(this.numAfkDelay);
             this.flowLayoutPanel1.Controls.Add(this.label8);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -121,21 +119,9 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(214, 25);
             this.flowLayoutPanel1.TabIndex = 2;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Location = new System.Drawing.Point(0, 0);
-            this.label2.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(34, 26);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Delay";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // numAfkDelay
             // 
-            this.numAfkDelay.Location = new System.Drawing.Point(40, 3);
+            this.numAfkDelay.Location = new System.Drawing.Point(3, 3);
             this.numAfkDelay.Maximum = new decimal(new int[] {
             60,
             0,
@@ -150,11 +136,11 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label8.Location = new System.Drawing.Point(107, 0);
+            this.label8.Location = new System.Drawing.Point(70, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(43, 26);
+            this.label8.Size = new System.Drawing.Size(99, 26);
             this.label8.TabIndex = 3;
-            this.label8.Text = "minutes";
+            this.label8.Text = "minutes of inactivity";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label3
@@ -329,7 +315,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox chkAfk;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox chkAutoStart;
         private System.Windows.Forms.NumericUpDown numAfkDelay;

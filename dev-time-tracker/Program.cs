@@ -1,17 +1,22 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Timers;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace DevTimeTracker
 {
     internal static class Program
     {
-        private const string Title = "Dev Time Tracker";
+        private const string _title = "Dev Time Tracker";
+        private const long _dayTotalTicks = 864000000000;
         private static bool _isPauseForced;
+        private static bool _wasDailyReset;
         private static System.Timers.Timer _timer;
         private static DateTime _time;
+        private static DateTime _date;
         private static ContextMenu _menu;
         private static MenuItem _mnuExit;
         private static MenuItem _mnuSettings;
@@ -29,8 +34,7 @@ namespace DevTimeTracker
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            new Mutex(true, Title, out var createdNew);
-            if (!createdNew) return;
+            if (Process.GetProcessesByName(typeof(Program).Assembly.GetName().Name).Count() > 1) return;
 
             var notifyThread = new Thread(
                 delegate ()
@@ -56,6 +60,7 @@ namespace DevTimeTracker
             };
 
             _timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
+            _date = DateTime.Now;
 
             if (Properties.Settings.Default.AutoStart)
             {
@@ -101,7 +106,7 @@ namespace DevTimeTracker
             {
                 Icon = Properties.Resources.systray,
                 ContextMenu = _menu,
-                Text = Title,
+                Text = _title,
                 Visible = true
             };
         }
@@ -113,7 +118,7 @@ namespace DevTimeTracker
 
         private static void DisplayTime()
         {
-            _notificationIcon.Text = IsTimeRunning ? _time.ToString(Properties.Settings.Default.TimeFormat) : Title;
+            _notificationIcon.Text = IsTimeRunning ? _time.ToString(Properties.Settings.Default.TimeFormat) : _title;
         }
 
         private static void CheckUserActivity()
@@ -136,10 +141,14 @@ namespace DevTimeTracker
             if (!Properties.Settings.Default.ResetDailyEnabled) return;
 
             var now = DateTime.Now;
-            var isOClock = now.Minute == 0 && now.Second == 0;
-            if (now.Hour == Properties.Settings.Default.ResetDailyAtHour && isOClock)
+            var resetAtHour = Properties.Settings.Default.ResetDailyAtHour;
+
+            if (_wasDailyReset = (_wasDailyReset && now.Hour >= resetAtHour)) return;
+ 
+            if (now.Hour == resetAtHour && now.Minute == 0 && now.Second == 0)
             {
                 ResetTime();
+                _wasDailyReset = true;
             }
         }
 
@@ -214,15 +223,25 @@ namespace DevTimeTracker
 
         private static void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
         {
-            if (!Properties.Settings.Default.LockScreenEnabled) return;
-
             if (e.Reason == SessionSwitchReason.SessionLock )
             {
-                Pause();
+                if (Properties.Settings.Default.LockScreenEnabled)
+                {
+                    Pause();
+                }
             }
             else if (e.Reason == SessionSwitchReason.SessionUnlock)
             {
-                Resume();
+                if (Properties.Settings.Default.LockScreenEnabled)
+                {
+                    Resume();
+                }
+                if (Properties.Settings.Default.ResetDailyEnabled && DateTime.Now.AddTicks(-_date.Ticks).Ticks >= _dayTotalTicks)
+                {
+                    ResetTime();
+                    _date = DateTime.Now;
+                    _wasDailyReset = true;
+                }
             }
         }
         private static void BindToLockScreen()
