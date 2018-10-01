@@ -1,4 +1,4 @@
-﻿namespace DevTimeTracker
+namespace DevTimeTracker
 {
     enum MenuEnum
     {
@@ -9,9 +9,9 @@
         Exit
     }
 
-    static class Menu
+    internal static class Menu
     {
-        public static string ToKey(this MenuEnum menu)
+        internal static string ToKey(this MenuEnum menu)
         {
             return menu.ToString().ToLowerInvariant().Replace(" ", string.Empty);
         }

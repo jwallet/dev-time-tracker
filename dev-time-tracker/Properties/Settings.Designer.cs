@@ -106,5 +106,17 @@ namespace DevTimeTracker.Properties {
                 this["TimeFormat"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public long LastShiftTicks {
+            get {
+                return ((long)(this["LastShiftTicks"]));
+            }
+            set {
+                this["LastShiftTicks"] = value;
+            }
+        }
     }
 }

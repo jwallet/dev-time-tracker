@@ -23,5 +23,8 @@
     <Setting Name="TimeFormat" Type="System.String" Scope="User">
       <Value Profile="(Default)">H:mm:ss</Value>
     </Setting>
+    <Setting Name="LastShiftTicks" Type="System.Int64" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

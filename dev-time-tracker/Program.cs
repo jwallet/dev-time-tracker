@@ -15,20 +15,18 @@ namespace DevTimeTracker
         private const long _dayTotalTicks = 864000000000;
 
         private static bool _isPauseForced;
+        private static bool _isRunning;
         private static bool _wasDailyReset;
         private static System.Timers.Timer _timer;
         private static DateTime _time;
         private static DateTime _date;
-        private static ContextMenu _menu;
-        private static Dictionary<MenuEnum, EventHandler> _menus;
-        private static NotifyIcon _notificationIcon;
+        private static Menus _menus;
+        private static Notification _notification;
         private static frmSettings _frmSettings;
 
-        private static System.Drawing.Icon GetNotificationIcon { get => _timer.Enabled ? Properties.Resources.systray : Properties.Resources.systray_inactive; }
-        private static MenuItem GetResumeMenu { get => _menu.MenuItems.Find(MenuEnum.Resume.ToKey(), false).First(); }
-        private static MenuItem GetPauseMenu { get => _menu.MenuItems.Find(MenuEnum.Pause.ToKey(), false).First(); }
-        private static string GetTooltipTitle { get => _timer.Enabled ? GetTime : _title; }
-        private static string GetTime { get => _time.ToString(Properties.Settings.Default.TimeFormat); }
+        private static System.Drawing.Icon GetNotificationIcon { get => _isRunning ? Properties.Resources.systray : Properties.Resources.systray_inactive; }
+        private static string GetTooltipTitle { get => _isRunning ? GetTime : _title; }
+        private static string GetTime { get => _time.ToTimeFormat(); }
 
         [STAThread]
         private static void Main()
@@ -79,14 +77,20 @@ namespace DevTimeTracker
 
             if (!manual)
             {
-                ShowNotificationBalloon($"New day! Time has been reset.");
+                _notification.ShowNotificationBalloon(Notification.GetOnResetContnent());
+                SaveLastShift();
             }
+        }
+
+        private static void SaveLastShift()
+        {
+            Properties.Settings.Default.LastShiftTicks = _time.Ticks;
+            Properties.Settings.Default.Save();
         }
 
         private static void CreateMenu()
         {
-            _menu = new ContextMenu();
-            _menus = new Dictionary<MenuEnum, EventHandler>()
+            var menusDictionary = new Dictionary<MenuEnum, EventHandler>()
             {
                 { MenuEnum.Pause, new EventHandler(mnuPause_Click) },
                 { MenuEnum.Resume, new EventHandler(mnuResume_Click) },
@@ -95,37 +99,23 @@ namespace DevTimeTracker
                 { MenuEnum.Exit, new EventHandler(mnuExit_Click) },
             };
 
-            foreach (var menu in _menus)
-            {
-                var menuItem = new MenuItem(menu.Key.ToString(), menu.Value)
-                {
-                    Name = menu.Key.ToKey()
-                };
-                _menu.MenuItems.Add(menuItem);
-            }
+            _menus = new Menus(menusDictionary);
         }
 
         private static void CreateIcon()
         {
-            _notificationIcon = new NotifyIcon
-            {
-                Icon = Properties.Resources.systray,
-                ContextMenu = _menu,
-                Text = _title,
-                Visible = true,
-                BalloonTipTitle = _title,
-            };
-            _notificationIcon.Click += notificationIcon_Click;
+            _notification = new Notification(_menus.Menu, notificationIcon_Click, _title);
         }
 
         private static void AddTime()
-        { 
+        {
+            if (!_isRunning) return;
             _time = _time.AddSeconds(1);
         }
 
         private static void DisplayTime()
         {
-            _notificationIcon.Text = GetTooltipTitle;
+            _notification.NotificationIcon.Text = GetTooltipTitle;
         }
 
         private static void CheckUserActivity()
@@ -159,37 +149,25 @@ namespace DevTimeTracker
             }
         }
 
-        private static void FlipNotificationIconWith(System.Drawing.Icon icon)
-        {
-            if (_notificationIcon.Icon == icon) return;
-            _notificationIcon.Icon = icon;
-        }
-
         private static void Pause()
         {
-            if (!_timer.Enabled) return;
-            _timer.Stop();
+            if (!_isRunning) return;
+            _isRunning = false;
             MenuAndIconVisibility();
         }
 
         private static void Resume()
         {
-            if (_timer.Enabled) return;
-            _timer.Start();
+            if (_isRunning) return;
+            _isRunning = true;
             MenuAndIconVisibility();
         }
 
         private static void MenuAndIconVisibility()
         {
-            GetPauseMenu.Visible = _timer.Enabled;
-            GetResumeMenu.Visible = !_timer.Enabled;
-            _notificationIcon.Icon = GetNotificationIcon;
-        }
-
-        private static void ShowNotificationBalloon(string content)
-        {
-            _notificationIcon.BalloonTipText = content;
-            _notificationIcon.ShowBalloonTip(3000);
+            _menus.GetPauseMenu.Visible = _isRunning;
+            _menus.GetResumeMenu.Visible = !_isRunning;
+            _notification.NotificationIcon.Icon = GetNotificationIcon;
         }
 
         private static void timer_Elapsed(object sender, EventArgs e)
@@ -206,8 +184,8 @@ namespace DevTimeTracker
 
         private static void mnuExit_Click(object sender, EventArgs e)
         {
-            _notificationIcon.Visible = false;
-            _notificationIcon.Dispose();
+            _notification.Dispose();
+            SaveLastShift();
             Application.Exit();
         }
 
@@ -243,7 +221,7 @@ namespace DevTimeTracker
         private static void notificationIcon_Click(object sender, EventArgs e)
         {
             if (((MouseEventArgs)e).Button != MouseButtons.Left) return;
-            ShowNotificationBalloon($"{GetTime} currently logged");
+            _notification.ShowNotificationBalloon(Notification.GetOnClickContent(GetTime));
         }
 
         private static void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
