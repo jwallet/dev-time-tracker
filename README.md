@@ -1,4 +1,4 @@
-<img align="left" src="https://www.iconsdb.com/icons/download/color/59FF6F/time-48.gif" />
+<img align="left" src="https://www.iconsdb.com/icons/download/color/59FF6F/time-32.gif" />
 
 ## Dev Time Tracker
 
