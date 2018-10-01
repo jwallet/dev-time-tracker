@@ -68,6 +68,7 @@
     <Compile Include="frmSettings.Designer.cs">
       <DependentUpon>frmSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Menu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmSettings.resx">
@@ -106,6 +107,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\time-multi-size.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\systray_inactive.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

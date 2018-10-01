@@ -5,6 +5,7 @@ using System.Threading;
 using System.Timers;
 using System.Windows.Forms;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace DevTimeTracker
 {
@@ -12,21 +13,22 @@ namespace DevTimeTracker
     {
         private const string _title = "Dev Time Tracker";
         private const long _dayTotalTicks = 864000000000;
+
         private static bool _isPauseForced;
         private static bool _wasDailyReset;
         private static System.Timers.Timer _timer;
         private static DateTime _time;
         private static DateTime _date;
         private static ContextMenu _menu;
-        private static MenuItem _mnuExit;
-        private static MenuItem _mnuSettings;
-        private static MenuItem _mnuReset;
-        private static MenuItem _mnuPause;
-        private static MenuItem _mnuResume;
+        private static Dictionary<MenuEnum, EventHandler> _menus;
         private static NotifyIcon _notificationIcon;
         private static frmSettings _frmSettings;
 
-        private static bool IsTimeRunning { get => _timer.Enabled && _time.Ticks > 0; }
+        private static System.Drawing.Icon GetNotificationIcon { get => _timer.Enabled ? Properties.Resources.systray : Properties.Resources.systray_inactive; }
+        private static MenuItem GetResumeMenu { get => _menu.MenuItems.Find(MenuEnum.Resume.ToKey(), false).First(); }
+        private static MenuItem GetPauseMenu { get => _menu.MenuItems.Find(MenuEnum.Pause.ToKey(), false).First(); }
+        private static string GetTooltipTitle { get => _timer.Enabled ? GetTime : _title; }
+        private static string GetTime { get => _time.ToString(Properties.Settings.Default.TimeFormat); }
 
         [STAThread]
         private static void Main()
@@ -66,38 +68,41 @@ namespace DevTimeTracker
             {
                 _timer.Start();
             }
+
+            MenuAndIconVisibility();
         }
 
-        private static void ResetTime()
+        private static void ResetTime(bool manual = false)
         {
             _time = new DateTime();
             DisplayTime();
+
+            if (!manual)
+            {
+                ShowNotificationBalloon($"New day! Time has been reset.");
+            }
         }
 
         private static void CreateMenu()
         {
             _menu = new ContextMenu();
+            _menus = new Dictionary<MenuEnum, EventHandler>()
+            {
+                { MenuEnum.Pause, new EventHandler(mnuPause_Click) },
+                { MenuEnum.Resume, new EventHandler(mnuResume_Click) },
+                { MenuEnum.Reset, new EventHandler(mnuReset_Click) },
+                { MenuEnum.Settings, new EventHandler(mnuSettings_Click) },
+                { MenuEnum.Exit, new EventHandler(mnuExit_Click) },
+            };
 
-            _mnuPause = new MenuItem("Pause");
-            _menu.MenuItems.Add(0, _mnuPause);
-            _mnuPause.Click += new EventHandler(mnuPause_Click);
-            _mnuPause.Visible = false;
-
-            _mnuResume = new MenuItem("Resume");
-            _menu.MenuItems.Add(1, _mnuResume);
-            _mnuResume.Click += new EventHandler(mnuResume_Click);
-
-            _mnuReset = new MenuItem("Reset");
-            _menu.MenuItems.Add(2, _mnuReset);
-            _mnuReset.Click += new EventHandler(mnuReset_Click);
-
-            _mnuSettings = new MenuItem("Settings");
-            _menu.MenuItems.Add(3, _mnuSettings);
-            _mnuSettings.Click += new EventHandler(mnuSettings_Click);
-
-            _mnuExit = new MenuItem("Exit");
-            _menu.MenuItems.Add(4, _mnuExit);
-            _mnuExit.Click += new EventHandler(mnuExit_Click);
+            foreach (var menu in _menus)
+            {
+                var menuItem = new MenuItem(menu.Key.ToString(), menu.Value)
+                {
+                    Name = menu.Key.ToKey()
+                };
+                _menu.MenuItems.Add(menuItem);
+            }
         }
 
         private static void CreateIcon()
@@ -107,8 +112,10 @@ namespace DevTimeTracker
                 Icon = Properties.Resources.systray,
                 ContextMenu = _menu,
                 Text = _title,
-                Visible = true
+                Visible = true,
+                BalloonTipTitle = _title,
             };
+            _notificationIcon.Click += notificationIcon_Click;
         }
 
         private static void AddTime()
@@ -118,7 +125,7 @@ namespace DevTimeTracker
 
         private static void DisplayTime()
         {
-            _notificationIcon.Text = IsTimeRunning ? _time.ToString(Properties.Settings.Default.TimeFormat) : _title;
+            _notificationIcon.Text = GetTooltipTitle;
         }
 
         private static void CheckUserActivity()
@@ -152,16 +159,37 @@ namespace DevTimeTracker
             }
         }
 
+        private static void FlipNotificationIconWith(System.Drawing.Icon icon)
+        {
+            if (_notificationIcon.Icon == icon) return;
+            _notificationIcon.Icon = icon;
+        }
+
         private static void Pause()
         {
             if (!_timer.Enabled) return;
             _timer.Stop();
+            MenuAndIconVisibility();
         }
 
         private static void Resume()
         {
             if (_timer.Enabled) return;
             _timer.Start();
+            MenuAndIconVisibility();
+        }
+
+        private static void MenuAndIconVisibility()
+        {
+            GetPauseMenu.Visible = _timer.Enabled;
+            GetResumeMenu.Visible = !_timer.Enabled;
+            _notificationIcon.Icon = GetNotificationIcon;
+        }
+
+        private static void ShowNotificationBalloon(string content)
+        {
+            _notificationIcon.BalloonTipText = content;
+            _notificationIcon.ShowBalloonTip(3000);
         }
 
         private static void timer_Elapsed(object sender, EventArgs e)
@@ -174,15 +202,6 @@ namespace DevTimeTracker
             {
                 CheckUserActivity();
             }
-
-            MenuVisibility();
-        }
-
-        private static void MenuVisibility()
-        {
-            var isRunning = IsTimeRunning;
-            _mnuPause.Visible = isRunning;
-            _mnuResume.Visible = !isRunning;
         }
 
         private static void mnuExit_Click(object sender, EventArgs e)
@@ -206,7 +225,7 @@ namespace DevTimeTracker
 
         private static void mnuReset_Click(object sender, EventArgs e)
         {
-            ResetTime();
+            ResetTime(true);
         }
 
         private static void mnuPause_Click(object sender, EventArgs e)
@@ -219,6 +238,12 @@ namespace DevTimeTracker
         {
             _isPauseForced = false;
             Resume();
+        }
+
+        private static void notificationIcon_Click(object sender, EventArgs e)
+        {
+            if (((MouseEventArgs)e).Button != MouseButtons.Left) return;
+            ShowNotificationBalloon($"{GetTime} currently logged");
         }
 
         private static void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
