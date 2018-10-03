@@ -63,6 +63,18 @@
   <PropertyGroup>
     <ManifestKeyFile>dev-time-tracker_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>DevTimeTracker.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -74,7 +86,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AwayFromKeyboard.cs" />
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="DateTimeExtensions.cs" />
     <Compile Include="frmSettings.cs">
       <SubType>Form</SubType>
@@ -103,6 +115,7 @@
     <None Include="app.config" />
     <None Include="dev-time-tracker_TemporaryKey.pfx" />
     <None Include="dev-timer.pfx" />
+    <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

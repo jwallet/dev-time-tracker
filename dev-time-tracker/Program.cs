@@ -78,6 +78,7 @@ namespace DevTimeTracker
             if (!manual)
             {
                 _notification.ShowNotificationBalloon(Notification.GetOnResetContnent());
+                ValidFormInstance();
                 _frmSettings.SaveLastShift(_time);
             }
         }
@@ -116,7 +117,7 @@ namespace DevTimeTracker
         {
             if (_isPauseForced || !Properties.Settings.Default.AfkEnabled) return;
 
-            var lastActivityLogMilliseconds = AwayFromKeyboard.GetIdleTime();
+            var lastActivityLogMilliseconds = NativeMethods.GetIdleTime();
             if (lastActivityLogMilliseconds > Properties.Settings.Default.AfkDelayMilliseconds)
             {
                 Pause();
