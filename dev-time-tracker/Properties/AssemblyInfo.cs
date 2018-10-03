@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("jwallet")]
 [assembly: AssemblyProduct("Dev Time Tracker")]
 [assembly: AssemblyCopyright("Copyright ©  2018 - jwallet")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("jwallet")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
