@@ -74,15 +74,15 @@ namespace DevTimeTracker
 
         private static void ResetTime(bool manual = false)
         {
-            _time = new DateTime();
-            DisplayTime();
-
             if (!manual)
             {
-                _notification.ShowNotificationBalloon(Notification.GetOnResetContnent());
+                _notification.ShowNotificationBalloon(Notification.GetOnResetContent());
                 ValidFormInstance();
                 _frmSettings.SaveLastShift(_time);
             }
+
+            _time = new DateTime();
+            DisplayTime();
         }
 
         private static void CreateMenu()

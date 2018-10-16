@@ -41,7 +41,7 @@ namespace DevTimeTracker
             return $"{currently}\n{lastShift}";
         }
 
-        internal static string GetOnResetContnent()
+        internal static string GetOnResetContent()
         {
             return "New day! Time has been reset.";
         }
