@@ -14,6 +14,8 @@ namespace DevTimeTracker
         private const string _title = "Dev Time Tracker";
         private const long _dayTotalTicks = 864000000000;
 
+        private static SessionSwitchReason[] unlockedReasons;
+        private static SessionSwitchReason[] lockedReasons;
         private static bool _isPauseForced;
         private static bool _isRunning;
         private static bool _wasDailyReset;
@@ -168,6 +170,8 @@ namespace DevTimeTracker
         private static void BindToLockScreen()
         {
             SystemEvents.SessionSwitch += new SessionSwitchEventHandler(SystemEvents_SessionSwitch);
+            unlockedReasons = new[] { SessionSwitchReason.ConsoleConnect, SessionSwitchReason.RemoteConnect, SessionSwitchReason.SessionLogon, SessionSwitchReason.SessionUnlock };
+            lockedReasons = new[] { SessionSwitchReason.ConsoleDisconnect, SessionSwitchReason.RemoteDisconnect, SessionSwitchReason.SessionLogoff, SessionSwitchReason.SessionLock };
         }
 
         private static void ValidFormInstance()
@@ -233,14 +237,14 @@ namespace DevTimeTracker
 
         private static void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
         {
-            if (e.Reason == SessionSwitchReason.SessionLock || e.Reason == SessionSwitchReason.SessionLogoff)
+            if (unlockedReasons.Contains(e.Reason))
             {
                 if (Properties.Settings.Default.LockScreenEnabled)
                 {
                     Pause();
                 }
             }
-            else if (e.Reason == SessionSwitchReason.SessionUnlock || e.Reason == SessionSwitchReason.SessionLogon)
+            else if (lockedReasons.Contains(e.Reason))
             {
                 if (Properties.Settings.Default.LockScreenEnabled)
                 {
