@@ -237,14 +237,14 @@ namespace DevTimeTracker
 
         private static void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
         {
-            if (unlockedReasons.Contains(e.Reason))
+            if (lockedReasons.Contains(e.Reason))
             {
                 if (Properties.Settings.Default.LockScreenEnabled)
                 {
                     Pause();
                 }
             }
-            else if (lockedReasons.Contains(e.Reason))
+            else if (unlockedReasons.Contains(e.Reason))
             {
                 if (Properties.Settings.Default.LockScreenEnabled)
                 {
