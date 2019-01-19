@@ -2,7 +2,7 @@ namespace DevTimeTracker
 {
     enum MenuEnum
     {
-        Pause,
+        Suspend,
         Resume,
         Reset,
         Settings,
