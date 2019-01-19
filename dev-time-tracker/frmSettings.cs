@@ -58,12 +58,6 @@ namespace DevTimeTracker
             Properties.Settings.Default.Save();
         }
 
-        private void numResetDailyAt_ValueChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.ResetDailyAtHour = (int)numResetDailyAt.Value;
-            Properties.Settings.Default.Save();
-        }
-
         private void chkLockScreen_CheckedChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.LockScreenEnabled = chkLockScreen.Checked;
@@ -86,6 +80,12 @@ namespace DevTimeTracker
         private void cbTimeFormat_SelectedIndexChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.TimeFormat = _timeFormatOptions.FirstOrDefault(x => x.Value == cbTimeFormat.SelectedItem?.ToString()).Key;
+            Properties.Settings.Default.Save();
+        }
+
+        private void numResetDailyAt_ValueChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.ResetDailyAtHour = (int)numResetDailyAt.Value;
             Properties.Settings.Default.Save();
         }
     }

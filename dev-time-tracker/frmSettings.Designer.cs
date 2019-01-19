@@ -42,10 +42,10 @@
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.chkResetDaily = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.numResetDailyAt = new System.Windows.Forms.NumericUpDown();
-            this.label7 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.cbTimeFormat = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.numResetDailyAt = new System.Windows.Forms.NumericUpDown();
             this.tlpContent.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numAfkDelay)).BeginInit();
@@ -235,30 +235,6 @@
             this.label6.Text = "At";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // numResetDailyAt
-            // 
-            this.numResetDailyAt.Location = new System.Drawing.Point(44, 3);
-            this.numResetDailyAt.Maximum = new decimal(new int[] {
-            23,
-            0,
-            0,
-            0});
-            this.numResetDailyAt.Name = "numResetDailyAt";
-            this.numResetDailyAt.Size = new System.Drawing.Size(56, 20);
-            this.numResetDailyAt.TabIndex = 1;
-            this.numResetDailyAt.ValueChanged += new System.EventHandler(this.numResetDailyAt_ValueChanged);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label7.Location = new System.Drawing.Point(106, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(13, 26);
-            this.label7.TabIndex = 2;
-            this.label7.Text = "h";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -272,12 +248,37 @@
             // 
             // cbTimeFormat
             // 
+            this.cbTimeFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTimeFormat.FormattingEnabled = true;
             this.cbTimeFormat.Location = new System.Drawing.Point(158, 68);
             this.cbTimeFormat.Name = "cbTimeFormat";
             this.cbTimeFormat.Size = new System.Drawing.Size(121, 21);
             this.cbTimeFormat.TabIndex = 5;
             this.cbTimeFormat.SelectedIndexChanged += new System.EventHandler(this.cbTimeFormat_SelectedIndexChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label7.Location = new System.Drawing.Point(106, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(13, 26);
+            this.label7.TabIndex = 2;
+            this.label7.Text = "h";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // numResetDailyAt
+            // 
+            this.numResetDailyAt.Location = new System.Drawing.Point(44, 3);
+            this.numResetDailyAt.Maximum = new decimal(new int[] {
+            23,
+            0,
+            0,
+            0});
+            this.numResetDailyAt.Name = "numResetDailyAt";
+            this.numResetDailyAt.Size = new System.Drawing.Size(56, 20);
+            this.numResetDailyAt.TabIndex = 1;
+            this.numResetDailyAt.ValueChanged += new System.EventHandler(this.numResetDailyAt_ValueChanged);
             // 
             // frmSettings
             // 
@@ -324,11 +325,11 @@
         private System.Windows.Forms.CheckBox chkResetDaily;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.NumericUpDown numResetDailyAt;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox cbTimeFormat;
+        private System.Windows.Forms.NumericUpDown numResetDailyAt;
+        private System.Windows.Forms.Label label7;
     }
 }
 

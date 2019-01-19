@@ -16,7 +16,7 @@ namespace DevTimeTracker
 
         private static SessionSwitchReason[] unlockedReasons;
         private static SessionSwitchReason[] lockedReasons;
-        private static bool _isPauseForced;
+        private static bool _isSuspendForced;
         private static bool _isRunning;
         private static bool _wasDailyReset;
         private static System.Timers.Timer _timer;
@@ -29,6 +29,7 @@ namespace DevTimeTracker
         private static System.Drawing.Icon GetNotificationIcon { get => _isRunning ? Properties.Resources.systray : Properties.Resources.systray_inactive; }
         private static string GetTooltipTitle { get => _isRunning ? GetTime : _title; }
         private static string GetTime { get => _time.ToTimeFormat(); }
+        private static bool IsDailyResetNeeded { get => Properties.Settings.Default.ResetDailyEnabled && DateTime.Now.AddTicks(-_date.Ticks).Ticks >= _dayTotalTicks; }
 
         [STAThread]
         private static void Main()
@@ -45,6 +46,8 @@ namespace DevTimeTracker
                     CreateIcon();
                     CreateTimer();
                     BindToLockScreen();
+                    BindToPowerMode();
+                    BindToSessionEnding();
 
                     Application.Run();
                 }
@@ -78,18 +81,23 @@ namespace DevTimeTracker
             {
                 _notification.ShowNotificationBalloon(Notification.GetOnResetContent());
                 ValidFormInstance();
-                _frmSettings.SaveLastShift(_time);
+                SaveLastShift();
             }
 
             _time = new DateTime();
             DisplayTime();
         }
 
+        private static void SaveLastShift()
+        {
+            _frmSettings.SaveLastShift(_time);
+        }
+
         private static void CreateMenu()
         {
             var menusDictionary = new Dictionary<MenuEnum, EventHandler>()
             {
-                { MenuEnum.Pause, new EventHandler(mnuPause_Click) },
+                { MenuEnum.Suspend, new EventHandler(mnuSuspend_Click) },
                 { MenuEnum.Resume, new EventHandler(mnuResume_Click) },
                 { MenuEnum.Reset, new EventHandler(mnuReset_Click) },
                 { MenuEnum.Settings, new EventHandler(mnuSettings_Click) },
@@ -117,12 +125,12 @@ namespace DevTimeTracker
 
         private static void CheckUserActivity()
         {
-            if (_isPauseForced || !Properties.Settings.Default.AfkEnabled) return;
+            if (_isSuspendForced || !Properties.Settings.Default.AfkEnabled) return;
 
             var lastActivityLogMilliseconds = NativeMethods.GetIdleTime();
             if (lastActivityLogMilliseconds > Properties.Settings.Default.AfkDelayMilliseconds)
             {
-                Pause();
+                Suspend();
             }
             else
             {
@@ -146,7 +154,7 @@ namespace DevTimeTracker
             }
         }
 
-        private static void Pause()
+        private static void Suspend()
         {
             if (!_isRunning) return;
             _isRunning = false;
@@ -162,16 +170,9 @@ namespace DevTimeTracker
 
         private static void MenuAndIconVisibility()
         {
-            _menus.GetPauseMenu.Visible = _isRunning;
+            _menus.GetSuspendMenu.Visible = _isRunning;
             _menus.GetResumeMenu.Visible = !_isRunning;
             _notification.NotificationIcon.Icon = GetNotificationIcon;
-        }
-
-        private static void BindToLockScreen()
-        {
-            SystemEvents.SessionSwitch += new SessionSwitchEventHandler(SystemEvents_SessionSwitch);
-            unlockedReasons = new[] { SessionSwitchReason.ConsoleConnect, SessionSwitchReason.RemoteConnect, SessionSwitchReason.SessionLogon, SessionSwitchReason.SessionUnlock };
-            lockedReasons = new[] { SessionSwitchReason.ConsoleDisconnect, SessionSwitchReason.RemoteDisconnect, SessionSwitchReason.SessionLogoff, SessionSwitchReason.SessionLock };
         }
 
         private static void ValidFormInstance()
@@ -183,6 +184,57 @@ namespace DevTimeTracker
                 _frmSettings.Top = Screen.PrimaryScreen.WorkingArea.Bottom - _frmSettings.Height;
                 _frmSettings.FormClosed += delegate { _frmSettings = null; };
             }
+        }
+
+        private static void DailyResetTime()
+        {
+            ResetTime();
+            _date = DateTime.Now;
+            _wasDailyReset = true;
+        }
+
+        private static void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
+        {
+            if (lockedReasons.Contains(e.Reason))
+            {
+                if (Properties.Settings.Default.LockScreenEnabled)
+                {
+                    Suspend();
+                }
+            }
+            else if (unlockedReasons.Contains(e.Reason))
+            {
+                if (Properties.Settings.Default.LockScreenEnabled)
+                {
+                    Resume();
+                }
+                if (IsDailyResetNeeded)
+                {
+                    DailyResetTime();
+                }
+            }
+        }
+
+        private static void SystemEvents_PowerModeChanged(object sender, PowerModeChangedEventArgs e)
+        {
+            if (e.Mode == PowerModes.Suspend)
+            {
+                Suspend();
+            }
+            else if (e.Mode == PowerModes.Resume)
+            {
+                Resume();
+                if (IsDailyResetNeeded)
+                {
+                    DailyResetTime();
+                }
+            }
+        }
+
+        private static void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
+        {
+            SaveLastShift();
+            ResetTime();
         }
 
         private static void timer_Elapsed(object sender, EventArgs e)
@@ -197,10 +249,17 @@ namespace DevTimeTracker
             }
         }
 
+        private static void notificationIcon_Click(object sender, EventArgs e)
+        {
+            if (((MouseEventArgs)e).Button != MouseButtons.Left) return;
+            _notification.ShowNotificationBalloon(Notification.GetOnClickContent(GetTime));
+        }
+
+        #region Menu Click Handlers
         private static void mnuExit_Click(object sender, EventArgs e)
         {
             ValidFormInstance();
-            _frmSettings.SaveLastShift(_time);
+            SaveLastShift();
 
             _notification.Dispose();
             Application.Exit();
@@ -217,46 +276,36 @@ namespace DevTimeTracker
             ResetTime(true);
         }
 
-        private static void mnuPause_Click(object sender, EventArgs e)
+        private static void mnuSuspend_Click(object sender, EventArgs e)
         {
-            _isPauseForced = true;
-            Pause();
+            _isSuspendForced = true;
+            Suspend();
         }
 
         private static void mnuResume_Click(object sender, EventArgs e)
         {
-            _isPauseForced = false;
+            _isSuspendForced = false;
             Resume();
         }
+        #endregion
 
-        private static void notificationIcon_Click(object sender, EventArgs e)
+        #region System Events Binder
+        private static void BindToLockScreen()
         {
-            if (((MouseEventArgs)e).Button != MouseButtons.Left) return;
-            _notification.ShowNotificationBalloon(Notification.GetOnClickContent(GetTime));
+            SystemEvents.SessionSwitch += new SessionSwitchEventHandler(SystemEvents_SessionSwitch);
+            unlockedReasons = new[] { SessionSwitchReason.ConsoleConnect, SessionSwitchReason.RemoteConnect, SessionSwitchReason.SessionLogon, SessionSwitchReason.SessionUnlock };
+            lockedReasons = new[] { SessionSwitchReason.ConsoleDisconnect, SessionSwitchReason.RemoteDisconnect, SessionSwitchReason.SessionLogoff, SessionSwitchReason.SessionLock };
         }
 
-        private static void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
+        private static void BindToPowerMode()
         {
-            if (lockedReasons.Contains(e.Reason))
-            {
-                if (Properties.Settings.Default.LockScreenEnabled)
-                {
-                    Pause();
-                }
-            }
-            else if (unlockedReasons.Contains(e.Reason))
-            {
-                if (Properties.Settings.Default.LockScreenEnabled)
-                {
-                    Resume();
-                }
-                if (Properties.Settings.Default.ResetDailyEnabled && DateTime.Now.AddTicks(-_date.Ticks).Ticks >= _dayTotalTicks)
-                {
-                    ResetTime();
-                    _date = DateTime.Now;
-                    _wasDailyReset = true;
-                }
-            }
+            SystemEvents.PowerModeChanged += new PowerModeChangedEventHandler(SystemEvents_PowerModeChanged);
         }
+
+        private static void BindToSessionEnding()
+        {
+            SystemEvents.SessionEnding += new SessionEndingEventHandler(SystemEvents_SessionEnding);
+        }
+        #endregion
     }
 }

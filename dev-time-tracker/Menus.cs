@@ -10,7 +10,7 @@ namespace DevTimeTracker
         private Dictionary<MenuEnum, EventHandler> _menus;
 
         internal MenuItem GetResumeMenu { get => Menu.MenuItems.Find(MenuEnum.Resume.ToKey(), false).First(); }
-        internal MenuItem GetPauseMenu { get => Menu.MenuItems.Find(MenuEnum.Pause.ToKey(), false).First(); }
+        internal MenuItem GetSuspendMenu { get => Menu.MenuItems.Find(MenuEnum.Suspend.ToKey(), false).First(); }
         internal ContextMenu Menu { get; private set; }
 
         internal Menus(Dictionary<MenuEnum, EventHandler> dict)
