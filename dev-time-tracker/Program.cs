@@ -195,19 +195,16 @@ namespace DevTimeTracker
 
         private static void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
         {
+            if (!Properties.Settings.Default.LockScreenEnabled) return;
+
             if (lockedReasons.Contains(e.Reason))
             {
-                if (Properties.Settings.Default.LockScreenEnabled)
-                {
-                    Suspend();
-                }
+                Suspend();
             }
             else if (unlockedReasons.Contains(e.Reason))
             {
-                if (Properties.Settings.Default.LockScreenEnabled)
-                {
-                    Resume();
-                }
+                Resume();
+
                 if (IsDailyResetNeeded)
                 {
                     DailyResetTime();
@@ -217,6 +214,8 @@ namespace DevTimeTracker
 
         private static void SystemEvents_PowerModeChanged(object sender, PowerModeChangedEventArgs e)
         {
+            if (!Properties.Settings.Default.AfkEnabled) return;
+
             if (e.Mode == PowerModes.Suspend)
             {
                 Suspend();
@@ -224,6 +223,7 @@ namespace DevTimeTracker
             else if (e.Mode == PowerModes.Resume)
             {
                 Resume();
+
                 if (IsDailyResetNeeded)
                 {
                     DailyResetTime();

@@ -13,4 +13,4 @@ Keep track of time spent at work on a task
 
 Use the settings to customize it your way.
 
-![image](https://user-images.githubusercontent.com/23088305/46186931-29bb3480-c2af-11e8-8419-96d5df6dbc47.png)
+![image](https://user-images.githubusercontent.com/23088305/51421870-7767ef80-1b73-11e9-98e1-6d28b4ac3ab6.png)

@@ -42,10 +42,10 @@
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.chkResetDaily = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.numResetDailyAt = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.cbTimeFormat = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.numResetDailyAt = new System.Windows.Forms.NumericUpDown();
             this.tlpContent.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numAfkDelay)).BeginInit();
@@ -102,9 +102,9 @@
             this.chkAfk.Location = new System.Drawing.Point(158, 121);
             this.chkAfk.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
             this.chkAfk.Name = "chkAfk";
-            this.chkAfk.Size = new System.Drawing.Size(131, 16);
+            this.chkAfk.Size = new System.Drawing.Size(141, 16);
             this.chkAfk.TabIndex = 1;
-            this.chkAfk.Text = "Detects when I\'m AFK";
+            this.chkAfk.Text = "Suspends when I\'m AFK";
             this.chkAfk.UseVisualStyleBackColor = true;
             this.chkAfk.CheckedChanged += new System.EventHandler(this.chkAfk_CheckedChanged);
             // 
@@ -182,9 +182,9 @@
             this.chkLockScreen.Location = new System.Drawing.Point(158, 96);
             this.chkLockScreen.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
             this.chkLockScreen.Name = "chkLockScreen";
-            this.chkLockScreen.Size = new System.Drawing.Size(191, 16);
+            this.chkLockScreen.Size = new System.Drawing.Size(201, 16);
             this.chkLockScreen.TabIndex = 1;
-            this.chkLockScreen.Text = "Detects when my session is locked";
+            this.chkLockScreen.Text = "Suspends when my session is locked";
             this.chkLockScreen.UseVisualStyleBackColor = true;
             this.chkLockScreen.CheckedChanged += new System.EventHandler(this.chkLockScreen_CheckedChanged);
             // 
@@ -235,6 +235,30 @@
             this.label6.Text = "At";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // numResetDailyAt
+            // 
+            this.numResetDailyAt.Location = new System.Drawing.Point(44, 3);
+            this.numResetDailyAt.Maximum = new decimal(new int[] {
+            23,
+            0,
+            0,
+            0});
+            this.numResetDailyAt.Name = "numResetDailyAt";
+            this.numResetDailyAt.Size = new System.Drawing.Size(56, 20);
+            this.numResetDailyAt.TabIndex = 1;
+            this.numResetDailyAt.ValueChanged += new System.EventHandler(this.numResetDailyAt_ValueChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label7.Location = new System.Drawing.Point(106, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(13, 26);
+            this.label7.TabIndex = 2;
+            this.label7.Text = "h";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -255,30 +279,6 @@
             this.cbTimeFormat.Size = new System.Drawing.Size(121, 21);
             this.cbTimeFormat.TabIndex = 5;
             this.cbTimeFormat.SelectedIndexChanged += new System.EventHandler(this.cbTimeFormat_SelectedIndexChanged);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label7.Location = new System.Drawing.Point(106, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(13, 26);
-            this.label7.TabIndex = 2;
-            this.label7.Text = "h";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // numResetDailyAt
-            // 
-            this.numResetDailyAt.Location = new System.Drawing.Point(44, 3);
-            this.numResetDailyAt.Maximum = new decimal(new int[] {
-            23,
-            0,
-            0,
-            0});
-            this.numResetDailyAt.Name = "numResetDailyAt";
-            this.numResetDailyAt.Size = new System.Drawing.Size(56, 20);
-            this.numResetDailyAt.TabIndex = 1;
-            this.numResetDailyAt.ValueChanged += new System.EventHandler(this.numResetDailyAt_ValueChanged);
             // 
             // frmSettings
             // 
